@@ -32,6 +32,7 @@ public:
   LevelStatus Update() override;
   void CleanUp() override;
   void IncreaseSunshine(int amount);
+  bool CanShootZombie(int y);
 
   int GetSunshine() const { return sunshine; }
   int GetTick() const { return tick; }

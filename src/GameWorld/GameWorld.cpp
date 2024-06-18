@@ -185,6 +185,13 @@ std::shared_ptr<Plant> GameWorld::CheckCollisionWithPlant(std::shared_ptr<GameOb
   return nullptr;
 }
 
+bool GameWorld::CanShootZombie(int y) {
+  for (auto &zombie : zombies) {
+    if (zombie->GetY() == y) return true;
+  }
+  return false;
+}
+
 void GameWorld::RemoveDeadObjects() {
   UIs.remove_if([](const std::shared_ptr<GameObject> &obj) { return obj->IsDead(); });
   peas.remove_if([](const std::shared_ptr<Pea> &pea) { return pea->IsDead(); });

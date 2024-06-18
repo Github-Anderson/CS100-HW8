@@ -49,7 +49,7 @@ void Sunflower::Update() {
 void Peashooter::Update() {
   Plant::Update();
   if (shootTick >= 30) {
-    Shoot();
+    if (world->CanShootZombie(GetY())) Shoot();
     shootTick = 0;
   }
   ++shootTick;
@@ -77,7 +77,7 @@ void Repeater::Update() {
   if (shootTick >= shootTime) {
     if (shootTime >= 25) shootTime = 5;
     else shootTime = 25;
-    Shoot();
+    if (world->CanShootZombie(GetY())) Shoot();
     shootTick = 0;
   }
   ++shootTick;
