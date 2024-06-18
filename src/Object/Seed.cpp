@@ -20,12 +20,28 @@ Repeater_Seed::Repeater_Seed(int x, int y, pGameWorld world)
   : Seed(IMGID_SEED_REPEATER, x, y, REPEATER_COST, REPEATER_COOLDOWN, world) {}
 
 void Seed::OnClick() {
-  if (!world) {
-    std::cout << "World pointer is null!" << std::endl;
-    return;
-  }
   int sunshine = world->GetSunshine();
   if (sunshine >= cost) {
-    world->SelectSeed(GetCurrentImage(), GetX(), GetY(), cost, cooldown);
+    world->SelectSeed(std::static_pointer_cast<Seed>(shared_from_this()));
   }
+}
+
+std::shared_ptr<Plant> Sunflower_Seed::CreatePlant(int x, int y) {
+  return std::make_shared<Sunflower>(x, y, world);
+}
+
+std::shared_ptr<Plant> Peashooter_Seed::CreatePlant(int x, int y) {
+  return std::make_shared<Peashooter>(x, y, world);
+}
+
+std::shared_ptr<Plant> Wallnut_Seed::CreatePlant(int x, int y) {
+  return std::make_shared<Wallnut>(x, y, world);
+}
+
+std::shared_ptr<Plant> Cherry_Bomb_Seed::CreatePlant(int x, int y) {
+  return std::make_shared<Cherry_Bomb>(x, y, world);
+}
+
+std::shared_ptr<Plant> Repeater_Seed::CreatePlant(int x, int y) {
+  return std::make_shared<Repeater>(x, y, world);
 }

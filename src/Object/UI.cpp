@@ -21,8 +21,9 @@ Pea::Pea(int x, int y)
   : GameObject(IMGID_PEA, x, y, LAYER_PROJECTILES, 28, 28, ANIMID_NO_ANIMATION) {}
 
 void Slot::OnClick() {
-  if (world->GetSelectedSeed()->GetCurrentImage() == IMGID_NONE) { return; }
-  world->PlantSelectedPlant(GetX(), GetY());
+  if (world->GetSelectedSeed()->GetCurrentImage() != IMGID_NONE) {
+    world->PlantSelectedPlant(GetX(), GetY());
+  }
 }
 
 Shovel::Shovel(pGameWorld world)

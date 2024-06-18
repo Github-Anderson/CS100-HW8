@@ -42,8 +42,8 @@ public:
   void AddExplosion(std::shared_ptr<Explosion> explosion);
   
   void PlantSelectedPlant(int x, int y);
-  std::shared_ptr<Seed> GetSelectedSeed() { return selectedSeed; };
-  void SelectSeed(ImageID imageID, int x, int y, int cost, int cooldown);
+  std::shared_ptr<Seed> GetSelectedSeed() const { return selectedSeed; }
+  void SelectSeed(std::shared_ptr<Seed> seed);
   bool IsUsingShovel() const { return usingShovel; }
   void UsingShovel(bool condition) { usingShovel = condition; }
 
