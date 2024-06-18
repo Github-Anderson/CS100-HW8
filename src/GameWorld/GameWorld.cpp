@@ -36,14 +36,16 @@ void GameWorld::Init() {
   auto cherry_bomb_seed = std::make_shared<Cherry_Bomb_Seed>(310, WINDOW_HEIGHT - 44, shared_from_this());
   auto repeater_seed = std::make_shared<Repeater_Seed>(370, WINDOW_HEIGHT - 44, shared_from_this());
 
-  UIs.push_back(sunflower_seed);
-  UIs.push_back(peashooter_seed);
-  UIs.push_back(wallnut_seed);
-  UIs.push_back(cherry_bomb_seed);
-  UIs.push_back(repeater_seed);
+  seeds.push_back(sunflower_seed);
+  seeds.push_back(peashooter_seed);
+  seeds.push_back(wallnut_seed);
+  seeds.push_back(cherry_bomb_seed);
+  seeds.push_back(repeater_seed);
 
   auto shovel = std::make_shared<Shovel>(shared_from_this());
   UIs.push_back(shovel);
+
+  selectedSeed = std::make_shared<Seed>(IMGID_NONE, 0, 0, 0, 0, shared_from_this());
 }
 
 LevelStatus GameWorld::Update() {
@@ -71,6 +73,7 @@ LevelStatus GameWorld::Update() {
   CheckCollisions();
   RemoveDeadObjects();
   UpdateSun();
+  CheckAfford();
 
   return LevelStatus::ONGOING;
 }
@@ -159,7 +162,7 @@ void GameWorld::GenerateZombies(int n) {
 void GameWorld::CheckCollisions() {
   for (auto &zombie : zombies) {
     if (!explosions.empty()) {
-      for (auto explosion : explosions) {
+      for (auto &explosion : explosions) {
         if (std::abs(zombie->GetX() - explosion->GetX()) <= 100 && std::abs(zombie->GetY() - explosion->GetY()) <= 110) {
           zombie->MarkDead();
         }
@@ -177,7 +180,7 @@ void GameWorld::CheckCollisions() {
 }
 
 std::shared_ptr<Plant> GameWorld::CheckCollisionWithPlant(std::shared_ptr<GameObject> zombie) {
-  for (auto& plant : plants) {
+  for (auto &plant : plants) {
     if (std::abs(zombie->GetX() - plant->GetX()) <= 40 && std::abs(zombie->GetY() - plant->GetY()) <= 20) {
       return plant;
     }
@@ -194,6 +197,7 @@ bool GameWorld::CanShootZombie(int y) {
 
 void GameWorld::RemoveDeadObjects() {
   UIs.remove_if([](const std::shared_ptr<GameObject> &obj) { return obj->IsDead(); });
+  affmasks.remove_if([](const std::shared_ptr<Afford_Mask> &mask) { return mask->IsDead(); });
   peas.remove_if([](const std::shared_ptr<Pea> &pea) { return pea->IsDead(); });
   explosions.remove_if([](const std::shared_ptr<Explosion> &explosion) { return explosion->IsDead(); });
   plants.remove_if([](const std::shared_ptr<Plant> &plant) { return plant->IsDead(); });
@@ -220,7 +224,7 @@ void GameWorld::UpdateWave() {
 }
 
 void GameWorld::PlantSelectedPlant(int x, int y) {
-  switch (GetSeletedPlant()) {
+  switch (GetSelectedSeed()->GetCurrentImage()) {
     case IMGID_SEED_SUNFLOWER:
       plants.push_back(std::make_shared<Sunflower>(x, y, shared_from_this()));
       break;
@@ -235,20 +239,21 @@ void GameWorld::PlantSelectedPlant(int x, int y) {
       break;
     case IMGID_SEED_REPEATER:
       plants.push_back(std::make_shared<Repeater>(x, y, shared_from_this()));
+      break;
   }
   sunshine -= GetSelectedSeed()->GetCost();
-  UIs.push_back(std::make_shared<Mask>(GetSelectedSeed()->GetX(), GetSelectedSeed()->GetY(), GetSelectedSeed()->GetCooldown()));
-  SelectPlant(IMGID_NONE);
+  auto mask = std::make_shared<Mask>(GetSelectedSeed()->GetX(), GetSelectedSeed()->GetY(), GetSelectedSeed()->GetCooldown());
+  UIs.push_back(mask);
+  GetSelectedSeed()->ChangeImage(IMGID_NONE);
 }
 
-void GameWorld::RemovePlant(std::shared_ptr<Plant> plant) {
-  plant->MarkDead();
+void GameWorld::SelectSeed(ImageID imageID, int x, int y, int cost, int cooldown) {
+  selectedSeed->ChangeImage(imageID);
+  selectedSeed->MoveTo(x, y);
+  selectedSeed->SetCost(cost);
+  selectedSeed->SetCooldown(cooldown);
 }
 
-void GameWorld::SelectPlant(ImageID plant) {
-  selectedPlant = plant;
-}
-
-void GameWorld::SelectSeed(std::shared_ptr<Seed> seed) {
-  selectedSeed = seed;
+void GameWorld::CheckAfford() {
+  
 }

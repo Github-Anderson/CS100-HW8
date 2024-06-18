@@ -7,15 +7,14 @@
 
 class Seed : public UsableObject {
 public:
-
   Seed(ImageID imageID, int x, int y, int cost, int cooldown, pGameWorld world);
   pGameWorld world;
 
   int GetCost() const { return cost; };
+  void SetCost(int newcost) { cost = newcost; }
   int GetCooldown() const { return cooldown; };
-  void Update() override;
+  void SetCooldown(int newcooldown) { cooldown = newcooldown; }
   void OnClick() override;
-  auto GetThisSeed() { return shared_from_this(); }
 
 private:
   int cost;

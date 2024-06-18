@@ -37,6 +37,11 @@ private:
   int cooldownTick;
 };
 
+class Afford_Mask : public GameObject {
+public:
+  Afford_Mask(int x, int y);
+};
+
 class Explosion : public GameObject {
 public:
   Explosion(int x, int y);

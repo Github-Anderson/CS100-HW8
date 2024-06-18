@@ -11,6 +11,9 @@ Slot::Slot(int x, int y, pGameWorld world)
 Mask::Mask(int x, int y, int cooltime)
   : GameObject(IMGID_COOLDOWN_MASK, x, y, LAYER_COOLDOWN_MASK, 50, 70, ANIMID_NO_ANIMATION), cooldownTime(cooltime), cooldownTick(0) {}
 
+Afford_Mask::Afford_Mask(int x, int y)
+  : GameObject(IMGID_COOLDOWN_MASK, x, y, LAYER_COOLDOWN_MASK, 50, 70, ANIMID_NO_ANIMATION) {}
+
 Explosion::Explosion(int x, int y)
   : GameObject(IMGID_EXPLOSION, x, y, LAYER_PROJECTILES, 3 * LAWN_GRID_WIDTH, 3 * LAWN_GRID_HEIGHT, ANIMID_NO_ANIMATION), existTick(0) {}
 
@@ -18,7 +21,7 @@ Pea::Pea(int x, int y)
   : GameObject(IMGID_PEA, x, y, LAYER_PROJECTILES, 28, 28, ANIMID_NO_ANIMATION) {}
 
 void Slot::OnClick() {
-  if (world->GetSeletedPlant() == IMGID_NONE) { return; }
+  if (world->GetSelectedSeed()->GetCurrentImage() == IMGID_NONE) { return; }
   world->PlantSelectedPlant(GetX(), GetY());
 }
 
@@ -27,7 +30,7 @@ Shovel::Shovel(pGameWorld world)
 
 
 void Shovel::OnClick() {
-  if (world->GetSeletedPlant() != IMGID_NONE) return;
+  if (world->GetSelectedSeed()->GetCurrentImage() != IMGID_NONE) return;
   world->UsingShovel(!world->IsUsingShovel());
 }
 

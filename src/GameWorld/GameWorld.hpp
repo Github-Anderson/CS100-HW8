@@ -42,11 +42,8 @@ public:
   void AddExplosion(std::shared_ptr<Explosion> explosion);
   
   void PlantSelectedPlant(int x, int y);
-  void RemovePlant(std::shared_ptr<Plant> plant);
-  ImageID GetSeletedPlant() const { return selectedPlant; }
-  std::shared_ptr<Seed> GetSelectedSeed() { return selectedSeed; }
-  void SelectPlant(ImageID plant);
-  void SelectSeed(std::shared_ptr<Seed> seed);
+  std::shared_ptr<Seed> GetSelectedSeed() { return selectedSeed; };
+  void SelectSeed(ImageID imageID, int x, int y, int cost, int cooldown);
   bool IsUsingShovel() const { return usingShovel; }
   void UsingShovel(bool condition) { usingShovel = condition; }
 
@@ -64,19 +61,21 @@ private:
   bool usingShovel;
 
   std::list<std::shared_ptr<GameObject>> UIs;
+  std::list<std::shared_ptr<Seed>> seeds;
   std::list<std::shared_ptr<Slot>> slots;
   std::list<std::shared_ptr<Pea>> peas;
+  std::list<std::shared_ptr<Afford_Mask>> affmasks;
   std::list<std::shared_ptr<Explosion>> explosions;
   std::list<std::shared_ptr<Plant>> plants;
   std::list<std::shared_ptr<Zombie>> zombies;
   std::list<std::shared_ptr<TextBase>> texts;
-  ImageID selectedPlant;
   std::shared_ptr<Seed> selectedSeed;
 
   void UpdateObjects();
   void GenerateZombies(int n);
   void CheckCollisions();
   void RemoveDeadObjects();
+  void CheckAfford();
   bool CheckForLosingCondition();
   void UpdateSun();
   void UpdateWave();

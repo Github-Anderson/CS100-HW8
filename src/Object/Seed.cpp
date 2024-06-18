@@ -1,4 +1,5 @@
 #include "Seed.hpp"
+#include "UI.hpp"
 
 Seed::Seed(ImageID imageID, int x, int y, int cost, int cooldown, pGameWorld world)
   : UsableObject(imageID, x, y, 50, 70), cost(cost), cooldown(cooldown), world(world) {}
@@ -18,11 +19,13 @@ Cherry_Bomb_Seed::Cherry_Bomb_Seed(int x, int y, pGameWorld world)
 Repeater_Seed::Repeater_Seed(int x, int y, pGameWorld world)
   : Seed(IMGID_SEED_REPEATER, x, y, REPEATER_COST, REPEATER_COOLDOWN, world) {}
 
-void Seed::Update() {}
-
 void Seed::OnClick() {
-  if (world->GetSunshine() < GetCost()) { return; }
-  auto current = std::make_shared<Seed>(GetCurrentImage(), GetX(), GetY(), GetCost(), GetCooldown(), world);
-  world->SelectPlant(GetCurrentImage());
-  world->SelectSeed(current);
+  if (!world) {
+    std::cout << "World pointer is null!" << std::endl;
+    return;
+  }
+  int sunshine = world->GetSunshine();
+  if (sunshine >= cost) {
+    world->SelectSeed(GetCurrentImage(), GetX(), GetY(), cost, cooldown);
+  }
 }
