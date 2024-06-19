@@ -31,8 +31,9 @@ Shovel::Shovel(pGameWorld world)
 
 
 void Shovel::OnClick() {
-  if (world->GetSelectedSeed()->GetCurrentImage() != IMGID_NONE) return;
-  world->UsingShovel(!world->IsUsingShovel());
+  if (!world->GetSelectedSeed()) {
+    world->UsingShovel(!world->IsUsingShovel());
+  }
 }
 
 void Mask::Update() {
