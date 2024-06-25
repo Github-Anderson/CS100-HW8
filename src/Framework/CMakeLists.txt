@@ -41,8 +41,8 @@ IF (APPLE)
 ELSE()
   target_link_libraries(
     Framework
-    freeglut
     SOIL
+    freeglut
   )
 
   target_include_directories(
