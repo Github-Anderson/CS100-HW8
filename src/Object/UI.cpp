@@ -22,9 +22,7 @@ Pea::Pea(int x, int y)
 
 void Slot::OnClick() {
   if (world->GetSelectedSeed()) {
-    if (world->GetSelectedSeed()->GetCurrentImage() != IMGID_NONE) {
       world->PlantSelectedPlant(GetX(), GetY());
-    }
   }
 }
 

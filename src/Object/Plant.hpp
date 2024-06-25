@@ -41,6 +41,7 @@ public:
   Wallnut(int x, int y, pGameWorld world);
 
   void Update() override;
+  void OnClick() override;
 };
 
 class Cherry_Bomb : public Plant {
