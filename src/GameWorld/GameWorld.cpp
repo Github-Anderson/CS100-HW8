@@ -11,9 +11,7 @@ void GameWorld::Init() {
   nextWaveTick = 1200;
   nextSunDropTick = 180;
   usingShovel = false;
-
-  auto self = shared_from_this();
-
+  
   auto waveText = std::make_shared<TextBase>(50, 30, "Wave: " + std::to_string(wave), 1, 1, 1);
   auto sunshineText = std::make_shared<TextBase>(60, 520, std::to_string(sunshine), 0, 0, 0);
 
@@ -27,16 +25,16 @@ void GameWorld::Init() {
     for (int col = 0; col < GAME_COLS; ++col) {
       int x = FIRST_COL_CENTER + col * LAWN_GRID_WIDTH;
       int y = FIRST_ROW_CENTER + row * LAWN_GRID_HEIGHT;
-      auto plantingSlot = std::make_shared<Slot>(x, y, self);
+      auto plantingSlot = std::make_shared<Slot>(x, y, shared_from_this());
       slots.push_back(plantingSlot);
     }
   }
 
-  auto sunflower_seed = std::make_shared<Sunflower_Seed>(130, WINDOW_HEIGHT - 44, self);
-  auto peashooter_seed = std::make_shared<Peashooter_Seed>(190, WINDOW_HEIGHT - 44, self);
-  auto wallnut_seed = std::make_shared<Wallnut_Seed>(250, WINDOW_HEIGHT - 44, self);
-  auto cherry_bomb_seed = std::make_shared<Cherry_Bomb_Seed>(310, WINDOW_HEIGHT - 44, self);
-  auto repeater_seed = std::make_shared<Repeater_Seed>(370, WINDOW_HEIGHT - 44, self);
+  auto sunflower_seed = std::make_shared<Sunflower_Seed>(130, WINDOW_HEIGHT - 44, shared_from_this());
+  auto peashooter_seed = std::make_shared<Peashooter_Seed>(190, WINDOW_HEIGHT - 44, shared_from_this());
+  auto wallnut_seed = std::make_shared<Wallnut_Seed>(250, WINDOW_HEIGHT - 44, shared_from_this());
+  auto cherry_bomb_seed = std::make_shared<Cherry_Bomb_Seed>(310, WINDOW_HEIGHT - 44, shared_from_this());
+  auto repeater_seed = std::make_shared<Repeater_Seed>(370, WINDOW_HEIGHT - 44, shared_from_this());
 
   seeds.push_back(sunflower_seed);
   seeds.push_back(peashooter_seed);
@@ -44,7 +42,7 @@ void GameWorld::Init() {
   seeds.push_back(cherry_bomb_seed);
   seeds.push_back(repeater_seed);
 
-  auto shovel = std::make_shared<Shovel>(self);
+  auto shovel = std::make_shared<Shovel>(shared_from_this());
   UIs.push_back(shovel);
 
   selectedSeed = nullptr;

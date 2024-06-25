@@ -6,3 +6,5 @@ build/
 
 # Ignore all .DS_Store files
 .DS_Store
+
+.VSCodeCounter/
