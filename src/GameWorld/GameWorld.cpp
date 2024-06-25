@@ -228,13 +228,11 @@ void GameWorld::UpdateWave() {
 void GameWorld::PlantSelectedPlant(int x, int y) {
   if (selectedSeed) {
     auto plant = selectedSeed->CreatePlant(x, y);
-    if (plant) {
-      plants.push_back(plant);
-      sunshine -= selectedSeed->GetCost();
-      auto mask = std::make_shared<Mask>(selectedSeed->GetX(), selectedSeed->GetY(), selectedSeed->GetCooldown());
-      UIs.push_back(mask);
-      SelectSeed(nullptr);
-    }
+    plants.push_back(plant);
+    sunshine -= selectedSeed->GetCost();
+    auto mask = std::make_shared<Mask>(selectedSeed->GetX(), selectedSeed->GetY(), selectedSeed->GetCooldown());
+    UIs.push_back(mask);
+    SelectSeed(nullptr);
   }
 }
 
