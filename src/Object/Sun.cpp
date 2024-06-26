@@ -1,12 +1,12 @@
 #include "Sun.hpp"
 
-Sun::Sun(int x, int y, bool fromsunflower, pGameWorld world)
+Sun::Sun(int x, int y, bool fromSunFlower_, pGameWorld world_)
   : GameObject(IMGID_SUN, x, y, LAYER_SUN, 80, 80, ANIMID_IDLE_ANIM),
-    dropTime(fromsunflower ? randInt(10, 20) : randInt(63, 263)),
+    dropTime(fromSunFlower_ ? randInt(10, 20) : randInt(63, 263)),
     dropTick(0),
-    fromSunFlower(fromsunflower),
+    fromSunFlower(fromSunFlower_),
     xSpeed(randInt(-2, 2)),
-    world(world) {}
+    world(world_) {}
 
 void Sun::Update() {
   if (dropTick < dropTime) {

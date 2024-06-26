@@ -6,7 +6,7 @@
 
 class Sun : public GameObject {
 public:
-  Sun(int x, int y, bool fromSunFlower, pGameWorld world);
+  Sun(int x, int y, bool fromSunFlower_, pGameWorld world_);
 
   void Update() override;
   void OnClick() override;

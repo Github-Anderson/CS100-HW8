@@ -79,16 +79,20 @@ const AnimID ANIMID_EAT_ANIM = 2;
 const AnimID ANIMID_RUN_ANIM = 3;
 const AnimID ANIMID_JUMP_ANIM = 4;
 
-const int MAX_LAYERS = 7;
+const int MAX_LAYERS = 11;
 using LayerID = int;
 
 const LayerID LAYER_SUN = 0;
-const LayerID LAYER_ZOMBIES = 1;
-const LayerID LAYER_PROJECTILES = 2;
-const LayerID LAYER_PLANTS = 3;
-const LayerID LAYER_COOLDOWN_MASK = 4;
-const LayerID LAYER_UI = 5;
-const LayerID LAYER_BACKGROUND = 6;
+const LayerID LAYER_ZOMBIES_ROW0 = 1;
+const LayerID LAYER_ZOMBIES_ROW1 = 2;
+const LayerID LAYER_ZOMBIES_ROW2 = 3;
+const LayerID LAYER_ZOMBIES_ROW3 = 4;
+const LayerID LAYER_ZOMBIES_ROW4 = 5;
+const LayerID LAYER_PROJECTILES = 6;
+const LayerID LAYER_PLANTS = 7;
+const LayerID LAYER_COOLDOWN_MASK = 8;
+const LayerID LAYER_UI = 9;
+const LayerID LAYER_BACKGROUND = 10;
 
 const int MS_PER_FRAME = 33;
 

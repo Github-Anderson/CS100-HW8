@@ -8,7 +8,7 @@ class Plant;
 
 class Zombie : public GameObject {
 public:
-  Zombie(ImageID imageID, int x, int y, int health, pGameWorld world);
+  Zombie(ImageID imageID, int x, int y, int health_, int row_, pGameWorld world_);
   pGameWorld world;
 
   void Update() override;
@@ -20,18 +20,18 @@ protected:
 
 class Regular_Zombie : public Zombie {
 public:
-  Regular_Zombie(int x, int y, pGameWorld world);
+  Regular_Zombie(int x, int y, int row_, pGameWorld world_);
 };
 
 class Bucket_Head_Zombie : public Zombie {
 public:
-  Bucket_Head_Zombie(int x, int y, pGameWorld world);
+  Bucket_Head_Zombie(int x, int y, int row_, pGameWorld world_);
   void Update() override;
 };
 
 class Pole_Vaulting_Zombie : public Zombie {
 public:
-  Pole_Vaulting_Zombie(int x, int y, pGameWorld world);
+  Pole_Vaulting_Zombie(int x, int y, int row_, pGameWorld world_);
   void Update() override;
 private:
   int jumpTick;

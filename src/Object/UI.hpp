@@ -10,7 +10,7 @@ public:
 
 class Slot : public GameObject {
 public:
-  Slot(int x, int y, pGameWorld world);
+  Slot(int x, int y, pGameWorld world_);
 
   void OnClick() override;
   
@@ -21,7 +21,7 @@ private:
 
 class Shovel : public UsableObject {
 public:
-  Shovel(pGameWorld world);
+  Shovel(pGameWorld world_);
   pGameWorld world;
 
   void OnClick() override;
@@ -29,7 +29,7 @@ public:
 
 class Mask : public GameObject {
 public:
-  Mask(int x, int y, int cool);
+  Mask(int x, int y, int cooldownTime_);
 
   void Update() override;
 private:

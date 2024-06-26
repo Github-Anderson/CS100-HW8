@@ -1,16 +1,16 @@
 #include "Zombie.hpp"
 
-Zombie::Zombie(ImageID imageID, int x, int y, int health, pGameWorld world)
-  : GameObject(imageID, x, y, LAYER_ZOMBIES, 20, 20, ANIMID_WALK_ANIM), health(health), world(world) {}
+Zombie::Zombie(ImageID imageID, int x, int y, int health_, int row_, pGameWorld world_)
+  : GameObject(imageID, x, y, LAYER_ZOMBIES_ROW0 + row_, 20, 20, ANIMID_WALK_ANIM), health(health_), row(row_), world(world_) {}
 
-Regular_Zombie::Regular_Zombie(int x, int y, pGameWorld world)
-  : Zombie(IMGID_REGULAR_ZOMBIE, x, y, REGULAR_ZOMBIE_HEALTH, world) {}
+Regular_Zombie::Regular_Zombie(int x, int y, int row_, pGameWorld world_)
+  : Zombie(IMGID_REGULAR_ZOMBIE, x, y, REGULAR_ZOMBIE_HEALTH, row_, world_) {}
 
-Bucket_Head_Zombie::Bucket_Head_Zombie(int x, int y, pGameWorld world)
-  : Zombie(IMGID_BUCKET_HEAD_ZOMBIE, x, y, BUCKET_HEAD_ZOMBIE_HEALTH, world) {}
+Bucket_Head_Zombie::Bucket_Head_Zombie(int x, int y, int row_, pGameWorld world_)
+  : Zombie(IMGID_BUCKET_HEAD_ZOMBIE, x, y, BUCKET_HEAD_ZOMBIE_HEALTH, row_, world_) {}
 
-Pole_Vaulting_Zombie::Pole_Vaulting_Zombie(int x, int y, pGameWorld world)
-  : Zombie(IMGID_POLE_VAULTING_ZOMBIE, x, y, POLE_VAULTING_ZOMBIE_HEALTH, world), jumpTick(0) {
+Pole_Vaulting_Zombie::Pole_Vaulting_Zombie(int x, int y, int row_, pGameWorld world_)
+  : Zombie(IMGID_POLE_VAULTING_ZOMBIE, x, y, POLE_VAULTING_ZOMBIE_HEALTH, row_, world_), jumpTick(0) {
     PlayAnimation(ANIMID_RUN_ANIM);
   }
 

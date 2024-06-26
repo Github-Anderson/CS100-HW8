@@ -1,6 +1,6 @@
 #include "GameWorld.hpp"
 
-GameWorld::GameWorld() {}
+GameWorld::GameWorld() : zombies(5) {}
 
 GameWorld::~GameWorld() {}
 
@@ -84,7 +84,7 @@ void GameWorld::CleanUp() {
   peas.clear();
   explosions.clear();
   plants.clear();
-  zombies.clear();
+  for (auto &zombie_list : zombies) zombie_list.clear();
   texts.clear();
 }
 
@@ -129,8 +129,10 @@ void GameWorld::UpdateObjects() {
   for (auto &plant : plants) {
     plant->Update();
   }
-  for (auto &zombie : zombies) {
-    zombie->Update();
+  for (auto &zombie_list : zombies) {
+    for (auto &zombie : zombie_list) {
+      zombie->Update();
+    }
   }
 }
 
@@ -149,31 +151,33 @@ void GameWorld::GenerateZombies(int n) {
     std::shared_ptr<Zombie> zombie;
 
     if (p <= p1) {
-      zombie = std::make_shared<Regular_Zombie>(x, y, shared_from_this());
+      zombie = std::make_shared<Regular_Zombie>(x, y, row, shared_from_this());
     } else if (p <= p1 + p2) {
-      zombie = std::make_shared<Pole_Vaulting_Zombie>(x, y, shared_from_this());
+      zombie = std::make_shared<Pole_Vaulting_Zombie>(x, y, row, shared_from_this());
     } else {
-      zombie = std::make_shared<Bucket_Head_Zombie>(x, y, shared_from_this());
+      zombie = std::make_shared<Bucket_Head_Zombie>(x, y, row, shared_from_this());
     }
-    zombies.push_back(zombie);
+    (zombies[row]).push_back(zombie);
   }
 }
 
 void GameWorld::CheckCollisions() {
-  for (auto &zombie : zombies) {
-    if (!explosions.empty()) {
-      for (auto &explosion : explosions) {
-        if (std::abs(zombie->GetX() - explosion->GetX()) <= 100 && std::abs(zombie->GetY() - explosion->GetY()) <= 110) {
-          zombie->MarkDead();
+  for (auto &zombie_list : zombies) {
+    for (auto &zombie : zombie_list) {
+      if (!explosions.empty()) {
+        for (auto &explosion : explosions) {
+          if (std::abs(zombie->GetX() - explosion->GetX()) <= 100 && std::abs(zombie->GetY() - explosion->GetY()) <= 110) {
+            zombie->MarkDead();
+          }
         }
       }
-    }
-    if (!peas.empty()) {
-      for (auto &pea : peas) {
-        if (!pea->IsDead()) {
-          if (std::abs(zombie->GetX() - pea->GetX()) <= 19 && std::abs(zombie->GetY() - pea->GetY()) <= 20) {
-            zombie->Damaged(20);
-            pea->MarkDead();
+      if (!peas.empty()) {
+        for (auto &pea : peas) {
+          if (!pea->IsDead()) {
+            if (std::abs(zombie->GetX() - pea->GetX()) <= 19 && std::abs(zombie->GetY() - pea->GetY()) <= 20) {
+              zombie->Damaged(20);
+              pea->MarkDead();
+            }
           }
         }
       }
@@ -191,8 +195,10 @@ std::shared_ptr<Plant> GameWorld::CheckCollisionWithPlant(std::shared_ptr<GameOb
 }
 
 bool GameWorld::CanShootZombie(int y) {
-  for (auto &zombie : zombies) {
-    if (zombie->GetY() == y) return true;
+  for (auto &zombie_list : zombies) {
+    for (auto &zombie : zombie_list) {
+      if (zombie->GetY() == y) return true;
+    }
   }
   return false;
 }
@@ -203,15 +209,20 @@ void GameWorld::RemoveDeadObjects() {
   peas.remove_if([](const std::shared_ptr<Pea> &pea) { return pea->IsDead(); });
   explosions.remove_if([](const std::shared_ptr<Explosion> &explosion) { return explosion->IsDead(); });
   plants.remove_if([](const std::shared_ptr<Plant> &plant) { return plant->IsDead(); });
-  zombies.remove_if([](const std::shared_ptr<Zombie> &zombie) { return zombie->IsDead(); });
+  for (auto &zombie_list : zombies) {
+    zombie_list.remove_if([](const std::shared_ptr<Zombie> &zombie) { return zombie->IsDead(); });
+  }
 }
 
 bool GameWorld::CheckForLosingCondition() {
-  for (auto &zombie : zombies) {
-    if (zombie->GetX() < 0) {
-      return true;
+  for (auto &zombie_list : zombies) {
+    for (auto &zombie : zombie_list) {
+      if (zombie->GetX() < 0) {
+        return true;
+      }
     }
   }
+
   return false;
 }
 

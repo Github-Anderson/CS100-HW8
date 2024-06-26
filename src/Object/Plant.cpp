@@ -1,22 +1,22 @@
 #include "Plant.hpp"
 
-Plant::Plant(ImageID imageID, int x, int y, int health, pGameWorld world)
-  : GameObject(imageID, x, y, LAYER_PLANTS, 60, 80, ANIMID_IDLE_ANIM), health(health), world(world) {}
+Plant::Plant(ImageID imageID, int x, int y, int health_, pGameWorld world_)
+  : GameObject(imageID, x, y, LAYER_PLANTS, 60, 80, ANIMID_IDLE_ANIM), health(health_), world(world_) {}
 
-Sunflower::Sunflower(int x, int y, pGameWorld world)
-  : Plant(IMGID_SUNFLOWER, x, y, SUNFLOWER_HEALTH, world), dropTick(0), dropTime(randInt(30, 600)) {}
+Sunflower::Sunflower(int x, int y, pGameWorld world_)
+  : Plant(IMGID_SUNFLOWER, x, y, SUNFLOWER_HEALTH, world_), dropTick(0), dropTime(randInt(30, 600)) {}
 
-Peashooter::Peashooter(int x, int y, pGameWorld world)
-  : Plant(IMGID_PEASHOOTER, x, y, PEASHOOTER_HEALTH, world), shootTick(0) {}
+Peashooter::Peashooter(int x, int y, pGameWorld world_)
+  : Plant(IMGID_PEASHOOTER, x, y, PEASHOOTER_HEALTH, world_), shootTick(0) {}
 
-Wallnut::Wallnut(int x, int y, pGameWorld world)
-  : Plant(IMGID_WALLNUT, x, y, WALLNUT_HEALTH, world) {}
+Wallnut::Wallnut(int x, int y, pGameWorld world_)
+  : Plant(IMGID_WALLNUT, x, y, WALLNUT_HEALTH, world_) {}
 
-Cherry_Bomb::Cherry_Bomb(int x, int y, pGameWorld world)
-  : Plant(IMGID_CHERRY_BOMB, x, y, CHERRY_BOMB_HEALTH, world), explodeTick(0) {}
+Cherry_Bomb::Cherry_Bomb(int x, int y, pGameWorld world_)
+  : Plant(IMGID_CHERRY_BOMB, x, y, CHERRY_BOMB_HEALTH, world_), explodeTick(0) {}
 
-Repeater::Repeater(int x, int y, pGameWorld world)
-  : Plant(IMGID_REPEATER, x, y, REPEATER_HEALTH, world), shootTick(0), shootTime(30) {}
+Repeater::Repeater(int x, int y, pGameWorld world_)
+  : Plant(IMGID_REPEATER, x, y, REPEATER_HEALTH, world_), shootTick(0), shootTime(30) {}
 
 void Plant::Update() {
   if (health <= 0) {

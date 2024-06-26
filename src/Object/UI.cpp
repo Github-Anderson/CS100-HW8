@@ -5,11 +5,11 @@
 Background::Background()
   : GameObject(IMGID_BACKGROUND, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, LAYER_BACKGROUND, WINDOW_WIDTH, WINDOW_HEIGHT, ANIMID_NO_ANIMATION) {}
 
-Slot::Slot(int x, int y, pGameWorld world)
-  : GameObject(IMGID_NONE, x, y, LAYER_UI, 60, 80, ANIMID_NO_ANIMATION), world(world) {}
+Slot::Slot(int x, int y, pGameWorld world_)
+  : GameObject(IMGID_NONE, x, y, LAYER_UI, 60, 80, ANIMID_NO_ANIMATION), world(world_) {}
 
-Mask::Mask(int x, int y, int cooltime)
-  : GameObject(IMGID_COOLDOWN_MASK, x, y, LAYER_COOLDOWN_MASK, 50, 70, ANIMID_NO_ANIMATION), cooldownTime(cooltime), cooldownTick(0) {}
+Mask::Mask(int x, int y, int cooldownTime_)
+  : GameObject(IMGID_COOLDOWN_MASK, x, y, LAYER_COOLDOWN_MASK, 50, 70, ANIMID_NO_ANIMATION), cooldownTime(cooldownTime_), cooldownTick(0) {}
 
 Afford_Mask::Afford_Mask(int x, int y)
   : GameObject(IMGID_COOLDOWN_MASK, x, y, LAYER_COOLDOWN_MASK, 50, 70, ANIMID_NO_ANIMATION) {}
@@ -26,8 +26,8 @@ void Slot::OnClick() {
   }
 }
 
-Shovel::Shovel(pGameWorld world)
-  : UsableObject(IMGID_SHOVEL, 600, WINDOW_HEIGHT - 40, 50, 50), world(world) {}
+Shovel::Shovel(pGameWorld world_)
+  : UsableObject(IMGID_SHOVEL, 600, WINDOW_HEIGHT - 40, 50, 50), world(world_) {}
 
 
 void Shovel::OnClick() {

@@ -67,7 +67,7 @@ private:
   std::list<std::shared_ptr<Afford_Mask>> affmasks;
   std::list<std::shared_ptr<Explosion>> explosions;
   std::list<std::shared_ptr<Plant>> plants;
-  std::list<std::shared_ptr<Zombie>> zombies;
+  std::vector<std::list<std::shared_ptr<Zombie>>> zombies;
   std::list<std::shared_ptr<TextBase>> texts;
   std::shared_ptr<Seed> selectedSeed;
 
