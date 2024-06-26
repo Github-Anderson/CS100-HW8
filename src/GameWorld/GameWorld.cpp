@@ -6,9 +6,9 @@ GameWorld::~GameWorld() {}
 
 void GameWorld::Init() {
   wave = 0;
-  sunshine = 50;
+  sunshine = 5000;
   tick = 0;
-  nextWaveTick = 1200;
+  nextWaveTick = 30; //1200;
   nextSunDropTick = 180;
   usingShovel = false;
   
@@ -61,7 +61,7 @@ LevelStatus GameWorld::Update() {
     GenerateZombies((15 + wave) / 10);
     ++wave;
     UpdateWave();
-    nextWaveTick += std::max(150, 600 - 20 * wave);
+    nextWaveTick += 30; //std::max(150, 600 - 20 * wave);
   }
   
   if (tick > nextSunDropTick) {
