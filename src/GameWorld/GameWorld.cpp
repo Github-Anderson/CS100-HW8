@@ -197,7 +197,9 @@ std::shared_ptr<Plant> GameWorld::CheckCollisionWithPlant(std::shared_ptr<GameOb
 bool GameWorld::CanShootZombie(int y) {
   for (auto &zombie_list : zombies) {
     for (auto &zombie : zombie_list) {
-      if (zombie->GetY() == y) return true;
+      if (zombie->GetY() == y) {
+        return true;
+      }
     }
   }
   return false;
@@ -222,7 +224,6 @@ bool GameWorld::CheckForLosingCondition() {
       }
     }
   }
-
   return false;
 }
 
@@ -243,7 +244,7 @@ void GameWorld::PlantSelectedPlant(int x, int y) {
     sunshine -= selectedSeed->GetCost();
     auto mask = std::make_shared<Mask>(selectedSeed->GetX(), selectedSeed->GetY(), selectedSeed->GetCooldown());
     UIs.push_back(mask);
-    SelectSeed(nullptr);
+    selectedSeed = nullptr;
   }
 }
 
