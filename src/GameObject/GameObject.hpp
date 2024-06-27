@@ -24,7 +24,7 @@ public:
 
 private:
   pGameWorld world;
-  bool isDead;
+  bool isDead = false;
 };
 
 class UsableObject : public GameObject {
