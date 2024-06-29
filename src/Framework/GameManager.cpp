@@ -147,6 +147,11 @@ void GameManager::KeyDownEvent(unsigned char key, int x, int y) {
     if (m_pressedKeys.find(keyCode) == m_pressedKeys.end()) {
       m_pressedKeys.insert({ keyCode, true });
     }
+    if (keyCode == KeyCode::SPACE) {
+      if (m_world) {
+        m_world->Collect();
+      }
+    }
   }
 }
 void GameManager::KeyUpEvent(unsigned char key, int x, int y) {
@@ -327,6 +332,8 @@ inline KeyCode GameManager::ToKeyCode(unsigned char key) const {
     return KeyCode::QUIT;
   case '\r':
     return KeyCode::ENTER;
+  case ' ':
+    return KeyCode::SPACE;
   default:
     return KeyCode::NONE;
   }

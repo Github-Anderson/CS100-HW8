@@ -19,4 +19,4 @@ private:
   pGameWorld world;
 };
 
-#endif
+#endif // !SUN_HPP__

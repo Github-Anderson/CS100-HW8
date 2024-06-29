@@ -52,4 +52,4 @@ public:
   std::shared_ptr<Plant> CreatePlant(int x, int y) override;
 };
 
-#endif
+#endif // !SEED_HPP__

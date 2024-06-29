@@ -37,4 +37,4 @@ private:
   int jumpTick;
 };
 
-#endif
+#endif // !ZOMBIE_HPP__

@@ -19,6 +19,7 @@
 #include "Sun.hpp"
 
 class Seed;
+class Sun;
 class Plant;
 class Zombie;
 
@@ -30,9 +31,11 @@ public:
 
   void Init() override;
   LevelStatus Update() override;
+  void Collect() override;
   void CleanUp() override;
-  void IncreaseSunshine(int amount);
+  void IncreaseSunshine(int amount) { sunshine += amount; }
   bool CanShootZombie(int y);
+  bool ExistZombie() const;
 
   int GetSunshine() const { return sunshine; }
   int GetTick() const { return tick; }
@@ -61,6 +64,7 @@ private:
   bool usingShovel;
 
   std::list<std::shared_ptr<GameObject>> UIs;
+  std::list<std::shared_ptr<Sun>> suns;
   std::list<std::shared_ptr<Seed>> seeds;
   std::list<std::shared_ptr<Slot>> slots;
   std::list<std::shared_ptr<Pea>> peas;

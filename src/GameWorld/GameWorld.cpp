@@ -57,11 +57,11 @@ LevelStatus GameWorld::Update() {
   }
   ++tick;
 
-  if (tick > nextWaveTick) {
+  if (tick > nextWaveTick && !ExistZombie()) {
     GenerateZombies((15 + wave) / 10);
     ++wave;
     UpdateWave();
-    nextWaveTick += std::max(150, 600 - 20 * wave);
+    nextWaveTick = tick + std::max(90, 600 - 20 * wave);
   }
   
   if (tick > nextSunDropTick) {
@@ -78,18 +78,27 @@ LevelStatus GameWorld::Update() {
   return LevelStatus::ONGOING;
 }
 
+void GameWorld::Collect() {
+  if (!suns.empty()) {
+    for (auto &sun : suns) {
+      sun->MarkDead();
+      sunshine += 25;
+    }
+  }
+}
+
 void GameWorld::CleanUp() {
   UIs.clear();
+  suns.clear();
+  seeds.clear();
   slots.clear();
   peas.clear();
+  affmasks.clear();
   explosions.clear();
   plants.clear();
   for (auto &zombie_list : zombies) zombie_list.clear();
   texts.clear();
-}
-
-void GameWorld::IncreaseSunshine(int amount) {
-  sunshine += amount;
+  selectedSeed = nullptr;
 }
 
 void GameWorld::AddUI(std::shared_ptr<GameObject> ui) {
@@ -108,17 +117,20 @@ void GameWorld::DropSun() {
   int x = randInt(75, WINDOW_WIDTH - 75);
   int y = WINDOW_HEIGHT - 1;
   auto sun = std::make_shared<Sun>(x, y, false, shared_from_this());
-  UIs.push_back(sun);
+  suns.push_back(sun);
 }
 
 void GameWorld::DropSun(int x, int y) {
   auto sun = std::make_shared<Sun>(x, y, true, shared_from_this());
-  UIs.push_back(sun);
+  suns.push_back(sun);
 }
 
 void GameWorld::UpdateObjects() {
   for (auto &obj : UIs) {
     obj->Update();
+  }
+  for (auto &sun : suns) {
+    sun->Update();
   }
   for (auto &pea : peas) {
     pea->Update();
@@ -207,6 +219,7 @@ bool GameWorld::CanShootZombie(int y) {
 
 void GameWorld::RemoveDeadObjects() {
   UIs.remove_if([](const std::shared_ptr<GameObject> &obj) { return obj->IsDead(); });
+  suns.remove_if([](const std::shared_ptr<Sun> &sun) { return sun->IsDead(); });
   affmasks.remove_if([](const std::shared_ptr<Afford_Mask> &mask) { return mask->IsDead(); });
   peas.remove_if([](const std::shared_ptr<Pea> &pea) { return pea->IsDead(); });
   explosions.remove_if([](const std::shared_ptr<Explosion> &explosion) { return explosion->IsDead(); });
@@ -276,4 +289,13 @@ void GameWorld::CheckAfford() {
       }
     }
   }
+}
+
+bool GameWorld::ExistZombie() const {
+  for (auto &zombie_list : zombies) {
+    if (!zombie_list.empty()) {
+      return true;
+    }
+  }
+  return false;
 }

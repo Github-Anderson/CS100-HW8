@@ -28,6 +28,7 @@ enum class LevelStatus { ONGOING, LOSING };
 
 enum class KeyCode {
   NONE,
+  SPACE, // Space
   ENTER, // Enter
   QUIT   // Esc
 };

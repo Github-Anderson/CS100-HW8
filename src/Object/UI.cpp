@@ -31,6 +31,7 @@ Shovel::Shovel(pGameWorld world_)
 
 
 void Shovel::OnClick() {
+  world->SelectSeed(nullptr);
   if (!world->GetSelectedSeed()) {
     world->UsingShovel(!world->IsUsingShovel());
   }

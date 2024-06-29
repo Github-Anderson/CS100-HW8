@@ -58,4 +58,4 @@ public:
   void Update() override;
 };
 
-#endif
+#endif // !UI_HPP__

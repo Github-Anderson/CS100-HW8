@@ -17,6 +17,8 @@ public:
 
   virtual LevelStatus Update() = 0;
 
+  virtual void Collect() = 0;
+
   virtual void CleanUp() = 0;
 
 private:

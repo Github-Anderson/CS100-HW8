@@ -63,4 +63,4 @@ private:
   int shootTime;
 };
 
-#endif
+#endif // !PLANT_HPP__
