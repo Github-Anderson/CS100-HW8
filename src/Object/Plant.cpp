@@ -92,3 +92,13 @@ void Repeater::Shoot() {
   auto pea = std::make_shared<Pea>(GetX() + 30, GetY() + 14);
   world->AddPea(pea);
 }
+
+void Wallnut::OnClick() {
+  Plant::OnClick();
+  if (world->GetSelectedSeed()) {
+    if (world->GetSelectedSeed()->GetCurrentImage() == IMGID_SEED_WALLNUT) {
+      MarkDead();
+      world->PlantSelectedPlant(GetX(), GetY());
+    }
+  }
+}
