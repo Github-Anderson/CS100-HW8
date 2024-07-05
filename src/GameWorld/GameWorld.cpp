@@ -206,10 +206,10 @@ std::shared_ptr<Plant> GameWorld::CheckCollisionWithPlant(std::shared_ptr<GameOb
   return nullptr;
 }
 
-bool GameWorld::CanShootZombie(int y) {
+bool GameWorld::CanShootZombie(int x, int y) {
   for (auto &zombie_list : zombies) {
     for (auto &zombie : zombie_list) {
-      if (zombie->GetY() == y) {
+      if (zombie->GetX() >= x && zombie->GetY() == y) {
         return true;
       }
     }

@@ -34,7 +34,7 @@ public:
   void Collect() override;
   void CleanUp() override;
   void IncreaseSunshine(int amount) { sunshine += amount; }
-  bool CanShootZombie(int y);
+  bool CanShootZombie(int x, int y);
   bool ExistZombie() const;
 
   int GetSunshine() const { return sunshine; }
